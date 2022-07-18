@@ -15,11 +15,11 @@ class MyHomePage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            title: const Text('My Example'),
+            title: const Text('One Sliver (Not Smooth)'),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const MyExamplePage(),
+                builder: (context) => const OneSliverListPage(),
               ),
             ),
           ),

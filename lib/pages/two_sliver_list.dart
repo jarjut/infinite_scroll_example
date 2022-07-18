@@ -21,18 +21,28 @@ class _TwoSliverListPageState extends State<TwoSliverListPage> {
   void initState() {
     _scrollController.addListener(scrollListener);
     myList = List.generate(30, (i) => MyItem.defaultItem(i));
+    olderList = List.generate(
+        30,
+        (i) => MyItem.defaultItem(
+            olderList.isEmpty ? -i - 1 : olderList.last.id - i - 1));
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _scrollController.jumpTo(-90);
+    });
     super.initState();
   }
 
   void scrollListener() {
-    var nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
-    var previousPageTrigger = 0.8 * _scrollController.position.minScrollExtent;
+    var thresholdPixels = 1200;
+    var nextPageTrigger =
+        _scrollController.position.maxScrollExtent - thresholdPixels;
+    var previousPageTrigger =
+        _scrollController.position.minScrollExtent + thresholdPixels;
 
     if (_scrollController.position.pixels > nextPageTrigger) {
       addMoreItems();
     }
 
-    if (_scrollController.position.pixels >= previousPageTrigger) {
+    if (_scrollController.position.pixels < previousPageTrigger) {
       addMoreItemsBefore();
     }
   }

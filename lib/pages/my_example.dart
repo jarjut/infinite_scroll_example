@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll/item.dart';
 
-class MyExamplePage extends StatefulWidget {
-  const MyExamplePage({Key? key}) : super(key: key);
+class OneSliverListPage extends StatefulWidget {
+  const OneSliverListPage({Key? key}) : super(key: key);
 
   @override
-  State<MyExamplePage> createState() => _MyExamplePageState();
+  State<OneSliverListPage> createState() => _OneSliverListPageState();
 }
 
-class _MyExamplePageState extends State<MyExamplePage> {
+class _OneSliverListPageState extends State<OneSliverListPage> {
   final _scrollController = ScrollController();
 
   List<MyItem> myList = [];
@@ -28,12 +28,6 @@ class _MyExamplePageState extends State<MyExamplePage> {
     if (_scrollController.position.pixels > nextPageTrigger) {
       addMoreItems();
     }
-    print(_scrollController.position.maxScrollExtent);
-
-    // print('maxExtent: ${_scrollController.position.maxScrollExtent} '
-    //     'minExtent: ${_scrollController.position.minScrollExtent} '
-    //     'exBefore: ${_scrollController.position.extentBefore} '
-    //     'exAfter: ${_scrollController.position.extentAfter} ');
   }
 
   Future<void> addMoreItems() async {
@@ -52,7 +46,6 @@ class _MyExamplePageState extends State<MyExamplePage> {
     if (moreItemBeforeLoading) return;
     setState(() => moreItemBeforeLoading = true);
     await Future.delayed(const Duration(seconds: 2));
-    print(_scrollController.position.maxScrollExtent);
     var extentAfter = _scrollController.position.extentAfter;
     setState(() {
       moreItemBeforeLoading = false;
@@ -61,11 +54,13 @@ class _MyExamplePageState extends State<MyExamplePage> {
         List.generate(
             30, (i) => MyItem.moreItemBefore(myList.first.id - 30 + i)),
       );
-      print(_scrollController.position.maxScrollExtent);
       _scrollController
           .jumpTo(_scrollController.position.maxScrollExtent - extentAfter);
     });
-    print(_scrollController.position.maxScrollExtent);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController
+          .jumpTo(_scrollController.position.maxScrollExtent - extentAfter);
+    });
   }
 
   @override
@@ -109,13 +104,6 @@ class _MyExamplePageState extends State<MyExamplePage> {
             heroTag: 'add_more_items_before',
             onPressed: () => addMoreItemsBefore(),
             child: const Icon(Icons.arrow_upward),
-          ),
-          FloatingActionButton(
-            heroTag: 'add_single_item',
-            onPressed: () => setState(() {
-              myList.add(MyItem(myList.last.id + 1, 'More Single item'));
-            }),
-            child: const Icon(Icons.add),
           ),
         ],
       ),
