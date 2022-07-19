@@ -33,7 +33,7 @@ class _OneSliverListPageState extends State<OneSliverListPage> {
   Future<void> addMoreItems() async {
     if (moreItemLoading) return;
     setState(() => moreItemLoading = true);
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       moreItemLoading = false;
       myList.addAll(
@@ -45,7 +45,7 @@ class _OneSliverListPageState extends State<OneSliverListPage> {
   Future<void> addMoreItemsBefore() async {
     if (moreItemBeforeLoading) return;
     setState(() => moreItemBeforeLoading = true);
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     var extentAfter = _scrollController.position.extentAfter;
     setState(() {
       moreItemBeforeLoading = false;
@@ -54,8 +54,6 @@ class _OneSliverListPageState extends State<OneSliverListPage> {
         List.generate(
             30, (i) => MyItem.moreItemBefore(myList.first.id - 30 + i)),
       );
-      _scrollController
-          .jumpTo(_scrollController.position.maxScrollExtent - extentAfter);
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController
