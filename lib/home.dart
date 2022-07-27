@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll/pages/chat_example.dart';
+import 'package:infinite_scroll/pages/infinite_scroll_pagination.dart';
 import 'package:infinite_scroll/pages/my_example.dart';
 import 'package:infinite_scroll/pages/two_sliver_list.dart';
 import 'package:infinite_scroll/pages/two_sliver_with_app_bar.dart';
@@ -48,6 +49,15 @@ class MyHomePage extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const ChatExamplePage(),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text('Infinite Scroll Pagination Package'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const InfiniteScrollPaginationPage(),
               ),
             ),
           )
