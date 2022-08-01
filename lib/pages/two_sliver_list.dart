@@ -128,4 +128,10 @@ class _TwoSliverListPageState extends State<TwoSliverListPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
